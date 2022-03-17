@@ -1,1 +1,3 @@
 .idea
+# redis容器的数据
+deploy/redis

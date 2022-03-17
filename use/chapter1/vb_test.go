@@ -2,10 +2,10 @@ package chapter1
 
 import (
 	"fmt"
-	"github.com/91go/gobase/sz/redis-in-action/conf"
-	"github.com/91go/gofc"
 	"github.com/go-redis/redis/v8"
+	"github.com/gogf/gf/v2/util/grand"
 	"github.com/kr/pretty"
+	"redis-in-action/conf"
 	"testing"
 	"time"
 )
@@ -45,8 +45,8 @@ func TestWeibo(t *testing.T) {
 func addWeibo() {
 
 	for i := 0; i <= 10; i++ {
-		weiboKey := fmt.Sprintf("weibo:%s", gofc.RandNum(5))
-		posterKey := fmt.Sprintf("user:%s", gofc.RandNum(5))
+		weiboKey := fmt.Sprintf("weibo:%s", grand.Digits(5))
+		posterKey := fmt.Sprintf("user:%s", grand.Digits(5))
 
 		now := time.Now().Unix()
 
@@ -59,9 +59,9 @@ func addWeibo() {
 }
 
 func TestThumb(t *testing.T) {
-	//weiboId := gofunc.RandNum(5)
+	// weiboId := gofunc.RandNum(5)
 	weiboId := "03569"
-	userId := gofc.RandNum(5)
+	userId := grand.Digits(5)
 
 	client.ThumbWeibo(weiboId, userId)
 }

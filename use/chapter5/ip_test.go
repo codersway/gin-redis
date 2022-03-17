@@ -2,8 +2,8 @@ package chapter5
 
 import (
 	"fmt"
-	"github.com/91go/gobase/sz/redis-in-action/conf"
 	"math/rand"
+	"redis-in-action/conf"
 	"strconv"
 	"testing"
 )

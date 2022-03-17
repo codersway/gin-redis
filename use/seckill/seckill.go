@@ -3,7 +3,6 @@ package seckill
 import (
 	"context"
 	"fmt"
-	"github.com/91go/gofc/fcslice"
 	"github.com/go-redis/redis/v8"
 	"log"
 	"math/rand"
@@ -51,9 +50,9 @@ func (this *Client) SecKill(total int) bool {
 
 // 查看商品是否超发
 func (this *Client) CheckIsOverIssued() (keysCount int, sanitizeCount int, subtract int) {
-	//list := this.Conn.HGetAll(ctx, "sec-list")
+	// list := this.Conn.HGetAll(ctx, "sec-list")
 	keys := this.Conn.HKeys(ctx, "sec-list").Val()
-	sanitizeKeys := fcslice.RemoveDuplicateSlice(keys)
+	sanitizeKeys := removeDuplicates(keys)
 
 	keysCount = len(keys)
 	sanitizeCount = len(sanitizeKeys)
@@ -67,4 +66,23 @@ func (this *Client) CheckIsOverIssued() (keysCount int, sanitizeCount int, subtr
 // 基于队列实现
 func (this *Client) SecKillQueue() {
 
+}
+
+func removeDuplicates(elements []string) []string { // change string to int here if required
+	// Use map to record duplicates as we find them.
+	encountered := map[string]bool{} // change string to int here if required
+	result := []string{}             // change string to int here if required
+
+	for v := range elements {
+		if encountered[elements[v]] == true {
+			// Do not add duplicate.
+		} else {
+			// Record this element as an encountered element.
+			encountered[elements[v]] = true
+			// Append to result slice.
+			result = append(result, elements[v])
+		}
+	}
+	// Return the new slice.
+	return result
 }

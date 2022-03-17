@@ -1,7 +1,7 @@
 package chapter4
 
 import (
-	"github.com/91go/gobase/sz/redis-in-action/conf"
+	"redis-in-action/conf"
 	"testing"
 )
 

@@ -2,8 +2,8 @@ package chapter6
 
 import (
 	"context"
-	"github.com/91go/gobase/sz/redis-in-action/conf"
 	"github.com/go-redis/redis/v8"
+	"redis-in-action/conf"
 	"testing"
 )
 

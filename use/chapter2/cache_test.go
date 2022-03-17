@@ -1,7 +1,7 @@
 package chapter2
 
 import (
-	"github.com/91go/gobase/sz/redis-in-action/conf"
+	"redis-in-action/conf"
 	"testing"
 )
 
@@ -16,6 +16,6 @@ func TestCache(t *testing.T) {
 		})
 
 		t.Log("init ctx: ", result)
-		//assert.Equal(t, )
+		// assert.Equal(t, )
 	})
 }

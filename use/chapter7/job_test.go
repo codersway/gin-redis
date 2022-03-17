@@ -1,8 +1,8 @@
 package chapter7
 
 import (
-	"github.com/91go/gobase/sz/redis-in-action/conf"
 	"github.com/stretchr/testify/assert"
+	"redis-in-action/conf"
 	"testing"
 )
 
