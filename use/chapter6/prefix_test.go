@@ -2,9 +2,10 @@ package chapter6
 
 import (
 	"context"
-	"github.com/go-redis/redis/v8"
-	"redis-in-action/conf"
+	"gin-redis/conf"
 	"testing"
+
+	"github.com/go-redis/redis/v8"
 )
 
 var (
@@ -22,7 +23,6 @@ func TestPrefixAutoComplete(t *testing.T) {
 	t.Run("", func(t *testing.T) {
 		client.findPrefixRange("")
 	})
-
 }
 
 func add() {

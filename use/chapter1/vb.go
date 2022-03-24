@@ -3,9 +3,10 @@ package chapter1
 import (
 	"context"
 	"fmt"
-	"github.com/go-redis/redis/v8"
 	"strconv"
 	"time"
+
+	"github.com/go-redis/redis/v8"
 )
 
 type WeiboInterface interface {
@@ -75,7 +76,6 @@ func (this WeiboStruct) WriteWeibo(userId, title, link string) string {
 }
 
 func (this WeiboStruct) WeiboDetail(weiboId string) map[string]string {
-
 	detail := this.Conn.HGetAll(ctx, WeiboDetailKey+weiboId).Val()
 	//var vb Weibo
 	//err := mapstructure.Decode(detail, &vb)
@@ -103,11 +103,9 @@ func (this WeiboStruct) Feeds(page int64) []map[string]string {
 }
 
 func (this WeiboStruct) CommentsWeibo() {
-
 }
 
 func (this WeiboStruct) CommentsList() {
-
 }
 
 // todo 某个用户发布的所有微博

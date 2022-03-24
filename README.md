@@ -1,4 +1,4 @@
-# redis-in-action
+# gin-redis
 
 用gin整合一下项目，后面可能另外起一个社交项目，把这个项目里redis的使用都串一下;
 

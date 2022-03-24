@@ -2,12 +2,13 @@ package chapter7
 
 import (
 	"context"
-	"github.com/go-redis/redis/v8"
-	uuid "github.com/satori/go.uuid"
 	"log"
 	"reflect"
 	"strings"
 	"time"
+
+	"github.com/go-redis/redis/v8"
+	uuid "github.com/satori/go.uuid"
 )
 
 // 职位搜索引擎
@@ -15,9 +16,7 @@ type Client struct {
 	Conn *redis.Client
 }
 
-var (
-	ctx = context.Background()
-)
+var ctx = context.Background()
 
 func NewClient(conn *redis.Client) *Client {
 	return &Client{Conn: conn}

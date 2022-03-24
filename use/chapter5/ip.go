@@ -4,21 +4,20 @@ import (
 	"context"
 	"encoding/csv"
 	"encoding/json"
-	"github.com/go-redis/redis/v8"
 	"io"
 	"log"
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/go-redis/redis/v8"
 )
 
 type Client struct {
 	Conn *redis.Client
 }
 
-var (
-	ctx = context.Background()
-)
+var ctx = context.Background()
 
 func NewClient(conn *redis.Client) *Client {
 	return &Client{Conn: conn}

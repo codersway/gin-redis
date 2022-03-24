@@ -2,8 +2,8 @@ package chapter5
 
 import (
 	"fmt"
+	"gin-redis/conf"
 	"math/rand"
-	"redis-in-action/conf"
 	"strconv"
 	"testing"
 )

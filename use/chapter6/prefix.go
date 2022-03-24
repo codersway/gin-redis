@@ -20,9 +20,7 @@ func NewClient(conn *redis.Client) *PrefixStruct {
 }
 
 func (*PrefixStruct) PrefixAutoComplete(guild, prefix string) {
-
 }
 
 func (*PrefixStruct) findPrefixRange(prefix string) {
-
 }

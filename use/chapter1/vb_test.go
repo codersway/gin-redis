@@ -2,12 +2,13 @@ package chapter1
 
 import (
 	"fmt"
+	"gin-redis/conf"
+	"testing"
+	"time"
+
 	"github.com/go-redis/redis/v8"
 	"github.com/gogf/gf/v2/util/grand"
 	"github.com/kr/pretty"
-	"redis-in-action/conf"
-	"testing"
-	"time"
 )
 
 var (
@@ -16,7 +17,6 @@ var (
 )
 
 func TestWeibo(t *testing.T) {
-
 	t.Run("准备数据", func(t *testing.T) {
 		addWeibo()
 	})
@@ -43,7 +43,6 @@ func TestWeibo(t *testing.T) {
 }
 
 func addWeibo() {
-
 	for i := 0; i <= 10; i++ {
 		weiboKey := fmt.Sprintf("weibo:%s", grand.Digits(5))
 		posterKey := fmt.Sprintf("user:%s", grand.Digits(5))

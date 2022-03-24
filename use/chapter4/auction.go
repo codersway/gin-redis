@@ -3,9 +3,10 @@ package chapter4
 import (
 	"context"
 	"fmt"
-	"github.com/go-redis/redis/v8"
 	"log"
 	"time"
+
+	"github.com/go-redis/redis/v8"
 )
 
 // 实现游戏物品拍卖行
@@ -13,9 +14,7 @@ type Client struct {
 	Conn *redis.Client
 }
 
-var (
-	ctx = context.Background()
-)
+var ctx = context.Background()
 
 func NewClient(conn *redis.Client) *Client {
 	return &Client{Conn: conn}
@@ -41,7 +40,6 @@ func (this *Client) ListItem(itemId, sellerId string, price float64) bool {
 			}
 			return nil
 		}, inventory)
-
 		if err != nil {
 			log.Println("watch err:", err)
 			return false
@@ -79,7 +77,6 @@ func (this Client) PurchaseItem(buyerId, itemId, sellerId string, lPrice int64) 
 			}
 			return nil
 		}, "market:", buyer)
-
 		if err != nil {
 			log.Println(err)
 			return false

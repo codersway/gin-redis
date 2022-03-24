@@ -1,7 +1,7 @@
 package chapter2
 
 import (
-	"redis-in-action/conf"
+	"gin-redis/conf"
 	"testing"
 )
 

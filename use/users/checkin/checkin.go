@@ -2,9 +2,10 @@ package checkin
 
 import (
 	"context"
-	"github.com/go-redis/redis/v8"
 	"strconv"
 	"time"
+
+	"github.com/go-redis/redis/v8"
 )
 
 type CheckIn interface {
@@ -42,7 +43,6 @@ var (
 
 // 用户签到
 func (this *CheckInStruct) UserCheckIn(userId int) {
-
 	this.Conn.SetBit(ctx, todayCheckInDayKey, 1, userId)
 	this.Conn.SetBit(ctx, monthCheckInKey, 1, userId)
 }
@@ -55,7 +55,6 @@ func (this *CheckInStruct) UserCheckInRecord(userId int) string {
 
 // 某个用户本月签到总数
 func (this *CheckInStruct) UserCheckInCount() {
-
 }
 
 // 某天某个用户是否已签到
@@ -67,5 +66,4 @@ func (this *CheckInStruct) IsCheckIn(userId int, day string) string {
 }
 
 func (this *CheckInStruct) DayRecord() {
-
 }

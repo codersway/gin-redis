@@ -1,0 +1,81 @@
+version: "3"
+
+services:
+#  redis:
+#    image: redis:latest
+#    container_name: redis
+#    build: deploy
+#    volumes:
+#      - ./deploy/redis/:/redis/data
+#    ports:
+#      - 6379:6379
+#    restart: always
+#    networks:
+#      - backend
+  redis:
+    image: redis:5.0
+    environment:
+      - TZ=${TZ}
+    volumes:
+      - ./data/redis/data:/redis/data # redis数据
+      - ./config/redis.conf:/usr/local/etc/redis/redis.conf # redis配置文件
+      - ./data/redis/logs:/logs # redis日志文件
+    ports:
+      - 6379:6379
+    networks:
+      - backend
+    restart: always
+    command:
+      redis-server /usr/local/etc/redis/redis.conf
+
+  redis-manage:
+    image: erikdubbelboer/phpredisadmin:latest
+    environment:
+      - TZ=${TZ}
+      - ADMIN_USER=${REDIS_MANAGE_USERNAME}
+      - ADMIN_PASS=${REDIS_MANAGE_PASSWORD}
+      - REDIS_1_HOST=${REDIS_MANAGE_CONNECT_HOST}     # 设置连接的 Redis 服务 host，可以是 Redis 服务容器的名称，也可以是 Redis 服务容器的 ip 地址
+      - REDIS_1_PORT=${REDIS_MANAGE_CONNECT_PORT}     # 设置连接的 Redis 服务端口号
+    ports:
+      - "${REDIS_MANAGE_PORT}:80"
+    depends_on:
+      - redis
+    networks:
+      - backend
+    restart: always
+
+  # 修改mysql版本/volume映射/端口号
+  mysql:
+    image: mysql:8.0.20
+    container_name: mysql
+    ports:
+      - 3310:3306
+    expose:
+      - 3310
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=mtest
+      - TZ=Asia/Shanghai
+      - LANG=C.UTF-8 # 避免自动初始化sql文件乱码
+    volumes:
+      # 把sql文件映射到/docker-entrypoint-initdb.d文件夹，会自动初始化
+      - ./config/init:/docker-entrypoint-initdb.d/
+      - ./data/mysql/data:/var/lib/mysql
+      - ./data/mysql/log:/var/log/mysql
+    command:
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --explicit_defaults_for_timestamp=true
+      --lower_case_table_names=1
+      --max_allowed_packet=128M
+      --default-time-zone=+8:00 # 设置MySQL数据到时区，而不是容器到时区
+    restart: always
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "--protocol=tcp" ]
+      timeout: 20s
+      interval: 1s
+      retries: 20
+
+networks:
+  backend:
+    driver: ${NETWORKS_DRIVER}

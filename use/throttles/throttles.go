@@ -2,11 +2,12 @@ package throttles
 
 import (
 	"context"
-	"github.com/go-redis/redis/v8"
-	"github.com/gogf/gf/util/grand"
 	"log"
 	"strconv"
 	"time"
+
+	"github.com/go-redis/redis/v8"
+	"github.com/gogf/gf/util/grand"
 )
 
 type Throttles struct {
@@ -76,7 +77,6 @@ func (this *Throttles) ThrottlesLua() interface{} {
 	end
 `)
 	sha, err := script.Load(ctx, this.Conn).Result()
-
 	if err != nil {
 		log.Fatalln(err)
 	}

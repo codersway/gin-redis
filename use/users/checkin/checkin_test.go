@@ -1,7 +1,7 @@
 package checkin
 
 import (
-	"redis-in-action/conf"
+	"gin-redis/conf"
 	"strconv"
 	"testing"
 )
@@ -23,7 +23,6 @@ func TestCheckInStruct_UserCheckInRecord(t *testing.T) {
 }
 
 func TestCheckInStruct_DayRecord(t *testing.T) {
-
 }
 
 func TestCheckInStruct_IsCheckIn(t *testing.T) {
@@ -32,5 +31,4 @@ func TestCheckInStruct_IsCheckIn(t *testing.T) {
 }
 
 func TestCheckInStruct_UserCheckInCount(t *testing.T) {
-
 }

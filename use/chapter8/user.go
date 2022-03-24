@@ -3,13 +3,14 @@ package chapter8
 import (
 	"context"
 	"fmt"
-	"github.com/go-redis/redis/v8"
-	uuid "github.com/satori/go.uuid"
 	"log"
 	"math"
 	"reflect"
 	"strconv"
 	"time"
+
+	"github.com/go-redis/redis/v8"
+	uuid "github.com/satori/go.uuid"
 )
 
 type Client struct {
@@ -55,7 +56,6 @@ func (this *Client) CreateStatus(uid, message string, data map[string]interface{
 	pipeline.HGet(ctx, fmt.Sprintf("user:%s", uid), "login")
 	pipeline.Incr(ctx, "status:id:")
 	res, err := pipeline.Exec(ctx)
-
 	if err != nil {
 		log.Println("pipeline err in CreateStatus: ", err)
 		return ""
@@ -154,7 +154,7 @@ func (this *Client) AcquireLockWithTimeout(lockName string, acquireTimeout, lock
 
 func (this *Client) ReleaseLock(lockName, identifier string) bool {
 	lockName = "lock:" + lockName
-	var flag = true
+	flag := true
 	for flag {
 		err := this.Conn.Watch(ctx, func(tx *redis.Tx) error {
 			pipe := tx.TxPipeline()
@@ -171,7 +171,6 @@ func (this *Client) ReleaseLock(lockName, identifier string) bool {
 			flag = false
 			return nil
 		})
-
 		if err != nil {
 			log.Println("watch failed in ReleaseLock, err is: ", err)
 			return false

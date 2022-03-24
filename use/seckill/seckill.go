@@ -3,19 +3,18 @@ package seckill
 import (
 	"context"
 	"fmt"
-	"github.com/go-redis/redis/v8"
 	"log"
 	"math/rand"
 	"time"
+
+	"github.com/go-redis/redis/v8"
 )
 
 type Client struct {
 	Conn *redis.Client
 }
 
-var (
-	ctx = context.Background()
-)
+var ctx = context.Background()
 
 func NewClient(conn *redis.Client) *Client {
 	return &Client{
@@ -38,7 +37,6 @@ func (this *Client) SecKill(total int) bool {
 			tx.Unwatch(ctx)
 			return nil
 		}, "sec-total")
-
 		if err != nil {
 			log.Println("watch failed in ReleaseLock, err is: ", err)
 			return false
@@ -65,7 +63,6 @@ func (this *Client) CheckIsOverIssued() (keysCount int, sanitizeCount int, subtr
 
 // 基于队列实现
 func (this *Client) SecKillQueue() {
-
 }
 
 func removeDuplicates(elements []string) []string { // change string to int here if required

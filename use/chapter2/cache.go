@@ -4,19 +4,18 @@ import (
 	"context"
 	"crypto"
 	"encoding/hex"
-	"github.com/go-redis/redis/v8"
 	"net/url"
 	"strings"
 	"time"
+
+	"github.com/go-redis/redis/v8"
 )
 
 type Client struct {
 	Conn *redis.Client
 }
 
-var (
-	ctx = context.Background()
-)
+var ctx = context.Background()
 
 func NewClient(conn *redis.Client) *Client {
 	return &Client{
