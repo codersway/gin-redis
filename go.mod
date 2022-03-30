@@ -3,6 +3,7 @@ module gin-redis
 go 1.18
 
 require (
+	github.com/bmizerany/assert v0.0.0-20160611221934-b7ed37b82869
 	github.com/gin-gonic/gin v1.7.7
 	github.com/go-redis/redis/v8 v8.11.4
 	github.com/gogf/gf v1.16.6
