@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  # 修改volume/image版本/端口
+  redis:
+    image: redislabs/rebloom
+    container_name: rebloom
+    volumes:
+      - ./data/rebloom/data:/redis/data # redis数据
+      - .redis.conf:/usr/local/etc/redis/redis.conf # redis配置文件
+      - ./data/rebloom/logs:/logs # redis日志文件
+    command:
+      redis-server /usr/local/etc/redis/redis.conf
+    ports:
+      - 6379:6379
+    restart: always
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 20s
+      timeout: 3s
+

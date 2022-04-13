@@ -1,0 +1,87 @@
+version: "3"
+
+x-image:
+  &default-image
+    redis:6.2
+
+services:
+  redis-cluster-6380:
+    image: *default-image
+    container_name: redis-master
+    networks:
+      cluster-net:
+        ipv4_address: 172.16.238.10
+    ports:
+      - 6380:6379
+      - 16380:16380
+    volumes:
+      - ./log:/var/log/redis
+      - ./data:/data/redis
+    command:
+      redis-server --cluster-enabled yes  --cluster-announce-ip 172.16.238.10
+    environment:
+      # 设置时区为上海，否则时间会有问题
+      - TZ=Asia/Shanghai
+  redis-cluster-6381:
+    image: *default-image
+    container_name: redis-slave-1
+    networks:
+      cluster-net:
+        ipv4_address: 172.16.238.11
+    ports:
+      - 6381:6379
+      - 16381:16381
+    volumes:
+      - ./log:/var/log/redis
+      - ./data:/data/redis
+    command:
+      redis-server --slaveof redis-master 6379 --cluster-announce-ip 172.16.238.10
+    environment:
+      # 设置时区为上海，否则时间会有问题
+      - TZ=Asia/Shanghai
+  redis-cluster-6382:
+    image: *default-image
+    container_name: redis-slave-2
+    networks:
+      cluster-net:
+        ipv4_address: 172.16.238.12
+    ports:
+      - 6382:6379
+      - 16382:16382
+    volumes:
+      - ./log:/var/log/redis
+      - ./data:/data/redis
+    command:
+      redis-server --slaveof redis-master 6379 --cluster-announce-ip 172.16.238.10
+    environment:
+      # 设置时区为上海，否则时间会有问题
+      - TZ=Asia/Shanghai
+
+  # 修改volume/image版本/端口
+  sentinel:
+    image: redis:6.2
+    container_name: sentinel
+    networks:
+      cluster-net:
+        ipv4_address: 172.16.238.13 # 需要指定ip，否则ping不通
+    volumes:
+#      - ./data/redis/data:/redis/data # redis数据
+      - ./conf/sentinel.conf:/usr/local/etc/redis/sentinel.conf # sentinel配置文件
+      - ./log:/var/log/redis/ # sentinel日志文件
+    command:
+      redis-sentinel /usr/local/etc/redis/sentinel.conf
+    ports:
+      - 26379:26379
+    restart: always
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 20s
+      timeout: 3s
+
+
+networks:
+  # 创建集群网络，在容器之间通信
+  cluster-net:
+    ipam:
+      config:
+        - subnet: 172.16.238.0/24

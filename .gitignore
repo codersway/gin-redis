@@ -2,3 +2,4 @@
 # redis容器的数据
 deploy/redis
 /deploy/docker-redis-single/data/
+/deploy/docker-redis-cluster/log/
