@@ -1,4 +1,4 @@
-
+同步redis数据到mysql 方案
 
 使用canal解析binlog的方案，实现redis和mysql的数据一致性;
 

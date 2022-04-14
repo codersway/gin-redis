@@ -19,6 +19,8 @@ BF.RESERVE {key} {error_rate} {size}
 ```
 
 
+[//]: # (TODO 怎么手动安装redis布隆过滤器?)
+
 
 ## ref
 
